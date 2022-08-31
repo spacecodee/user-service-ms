@@ -1,5 +1,6 @@
 package com.spacecodee.user.service.controller;
 
+import com.spacecodee.user.service.dto.CarEntityDto;
 import com.spacecodee.user.service.entity.UserEntity;
 import com.spacecodee.user.service.service.UserEntityService;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,16 @@ public class UserEntityController {
             return ResponseEntity.notFound().build();
         }
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping(value = "/car/{id}")
+    public ResponseEntity<List<CarEntityDto>> getCarsByUserId(@PathVariable int id) {
+        List<CarEntityDto> carsByUserId = this.userEntityService.getCarsByUserId(id);
+        if (carsByUserId == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return new ResponseEntity<>(carsByUserId, HttpStatus.OK);
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
