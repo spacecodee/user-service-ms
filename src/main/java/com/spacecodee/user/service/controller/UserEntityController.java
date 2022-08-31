@@ -51,4 +51,10 @@ public class UserEntityController {
     public ResponseEntity<UserEntity> addUser(@RequestBody UserEntity userEntity) {
         return new ResponseEntity<>(this.userEntityService.save(userEntity), HttpStatus.OK);
     }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping(value = "/car/add/{id}")
+    public ResponseEntity<CarEntityDto> addCarUser(@PathVariable int id, @RequestBody CarEntityDto carEntityDto) {
+        return new ResponseEntity<>(this.userEntityService.addCar(id, carEntityDto), HttpStatus.OK);
+    }
 }
