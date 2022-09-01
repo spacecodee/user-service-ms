@@ -36,7 +36,7 @@ public class UserEntityService {
     }
 
     public List<CarEntityDto> getCarsByUserId(int id) {
-        return this.restTemplate.getForObject("http://localhost:8081/car/by-user/" + id, List.class);
+        return this.restTemplate.getForObject("http://localhost:car-service/car/by-user/" + id, List.class);
     }
 
     public CarEntityDto addCar(int id, CarEntityDto carEntityDto) {
