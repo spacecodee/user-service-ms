@@ -3,6 +3,7 @@ package com.spacecodee.user.service.controller;
 import com.spacecodee.user.service.dto.CarEntityDto;
 import com.spacecodee.user.service.entity.UserEntity;
 import com.spacecodee.user.service.service.UserEntityService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -52,9 +53,15 @@ public class UserEntityController {
         return new ResponseEntity<>(this.userEntityService.save(userEntity), HttpStatus.OK);
     }
 
+    @CircuitBreaker(name = "carCB", fallbackMethod = "fallbackSaveCar")
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value = "/car/add/{id}")
     public ResponseEntity<CarEntityDto> addCarUser(@PathVariable int id, @RequestBody CarEntityDto carEntityDto) {
         return new ResponseEntity<>(this.userEntityService.addCar(id, carEntityDto), HttpStatus.OK);
+    }
+
+    private ResponseEntity<CarEntityDto> fallbackSaveCar(@PathVariable int id, @RequestBody CarEntityDto carEntityDto,
+                                                         RuntimeException e) {
+        return ResponseEntity.internalServerError().build();
     }
 }
