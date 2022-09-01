@@ -5,7 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "car-service", url = "localhost:8081", path = "/car")
+@FeignClient(name = "car-service", url = "localhost:car-service", path = "/car")
 public interface CarFeignClient {
 
     @PostMapping(value = "/add")
